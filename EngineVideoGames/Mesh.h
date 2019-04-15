@@ -67,6 +67,10 @@ class BoundingBox
 	glm::vec3 yInit;      // y axis of the box. default value (0,1,0)		 
 	glm::vec3 zInit;	  // z axis of the box. default value (0,0,1)
 	//TODO: Add constructor and checkCollision function
+public:
+	BoundingBox(glm::vec3 center, glm::vec3 size);
+	
+
 };
 
 IndexedModel CubeTriangles();
