@@ -69,7 +69,7 @@ class BoundingBox
 	//TODO: Add constructor and checkCollision function
 public:
 	BoundingBox(glm::vec3 center, glm::vec3 size);
-	
+	bool BoundingBox::checkCollision(BoundingBox other);
 
 };
 

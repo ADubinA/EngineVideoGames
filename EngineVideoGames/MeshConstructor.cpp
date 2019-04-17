@@ -67,6 +67,18 @@ MeshConstructor::~MeshConstructor(void)
 	}
 }
 
+void MeshConstructor::make_tree(std::vector<glm::vec3> positions)
+{
+	std::list<Node::vecType> point_list;
+	for (auto i = 0; i < positions.size(); i++)
+	{
+
+		point_list.push_back(Node::vecType(positions[i].x, positions[i].y, positions[i].z, 1.0f));
+	}
+	tree.makeTree(point_list);
+
+}
+
 void MeshConstructor::InitLine(IndexedModel &model){
 	
 	int verticesNum = model.positions.size();
@@ -88,7 +100,7 @@ void MeshConstructor::InitLine(IndexedModel &model){
 }
 
 void MeshConstructor::InitMesh( IndexedModel &model){
-
+	make_tree(model.positions);
 	int verticesNum = model.positions.size();
 	indicesNum = model.indices.size();
 	

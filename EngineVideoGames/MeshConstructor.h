@@ -12,10 +12,11 @@ class MeshConstructor
 	VertexArray vao;
 	IndexBuffer *ib;
 	//TO DO: add bounding box data base and build it in the constructor 
+	Kdtree tree;
 	std::vector<VertexBuffer*> vbs;
 	bool is2D;
 	int unsigned indicesNum;
-	
+	void make_tree(std::vector<glm::vec3> point_list);
 	void InitLine(IndexedModel &model);
 	void InitMesh(IndexedModel &model);
 	void CopyMesh(const MeshConstructor &mesh);

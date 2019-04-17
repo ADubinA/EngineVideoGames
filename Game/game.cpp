@@ -67,8 +67,8 @@ void Game::Init()
 	shapeTransformation(zScale,3.30f);
 
 	pickedShape =3;
-	shapeTransformation(yScale,3.30f);
-	shapeTransformation(xScale,3.30f);
+	shapeTransformation(yScale,1.30f);
+	shapeTransformation(xScale,1.30f);
 	shapeTransformation(zScale,3.30f);
 
 	pickedShape = -1;
