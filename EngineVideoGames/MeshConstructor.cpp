@@ -76,6 +76,7 @@ void MeshConstructor::make_tree(std::vector<glm::vec3> positions)
 		point_list.push_back(Node::vecType(positions[i].x, positions[i].y, positions[i].z, 1.0f));
 	}
 	tree.makeTree(point_list);
+	//tree.printTree(tree.getRoot());
 
 }
 
@@ -140,7 +141,7 @@ void MeshConstructor::CopyLine(const MeshConstructor &mesh){
 }
 
 void MeshConstructor::CopyMesh(const MeshConstructor &mesh){
-
+	tree = *new Kdtree(mesh.tree);
 	vao.Bind();
 
 	for (int i = 0; i < 4; i++)

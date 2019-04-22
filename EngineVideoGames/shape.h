@@ -10,13 +10,13 @@ class Shape : public MovableGLM
 {
 private:
 
-	MeshConstructor *mesh;
 	Texture *tex;
 	bool isCopy;
-	unsigned int mode;
 	bool toRender;
 
 public:
+	MeshConstructor *mesh;
+	unsigned int mode;
 
 	Shape(const Shape& shape,unsigned int mode);
 

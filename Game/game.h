@@ -5,6 +5,8 @@
 class Game : public Scene
 {
 	Bezier1D *curve;
+	void Game::Rec_Create_Bounding_Box(Node* root, int parent, int level);
+
 public:
 	Game(void);
 	Game(glm::vec3 position,float angle,float hwRelation,float near, float far);

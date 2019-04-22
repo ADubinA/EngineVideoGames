@@ -1,6 +1,8 @@
 #include "game.h"
 #include <iostream>
 
+#define BOUNDING_BOX_INDEX 3
+
 static void printMat(const glm::mat4 mat)
 {
 	std::cout<<" matrix:"<<std::endl;
@@ -34,6 +36,30 @@ void Game::addShape(int type,int parent,unsigned int mode)
 		}
 }
 
+void Game::Rec_Create_Bounding_Box(Node* root, int parent, int level) 
+{
+
+	addShapeCopy(BOUNDING_BOX_INDEX, -1, LINE_LOOP);
+	
+	pickedShape = shapes.size() - 1;
+
+	shapeTransformation(xScale, 1 / (level + 1));
+	shapeTransformation(yScale, 1 / (level + 1));
+	shapeTransformation(zScale, 1 / (level + 1));
+
+	shapeTransformation(xLocalTranslate, root->data.x);
+	shapeTransformation(yLocalTranslate, root->data.y);
+	shapeTransformation(zLocalTranslate, root->data.z);
+	if (root->left != nullptr)
+	{
+		Rec_Create_Bounding_Box(root->left, parent, level+1);
+	}
+	if (root->right != nullptr)
+	{
+	Rec_Create_Bounding_Box(root->right, parent, level+1);
+	}
+}
+
 void Game::Init()
 {
 	addShape(Axis,-1,LINES);
@@ -41,8 +67,20 @@ void Game::Init()
 	//addShapeFromFile("../res/objs/torus.obj",-1,TRIANGLES);
 	addShapeCopy(1,-1,TRIANGLES);
 	addShape(Cube,1,LINE_LOOP);
-	addShapeCopy(3,2,LINE_LOOP);
-	
+	//addShapeCopy(3,2,LINE_LOOP);
+	for (int i=0; i<this->shapes.size(); i++)
+	{
+		Shape *shape = shapes[i];
+		if (shape->mode == TRIANGLES)
+		{
+			Kdtree* tree = &shape->mesh->tree;
+			Node* root = tree->getRoot();
+			
+			Rec_Create_Bounding_Box(root, i, 0);
+
+
+		}
+	}
 	
 	//translate all scene away from camera
 	myTranslate(glm::vec3(0,0,-20),0);
@@ -55,21 +93,21 @@ void Game::Init()
 
 	
 	ReadPixel();
-	
-	pickedShape = 2;
-	shapeTransformation(zLocalRotate,45);	
 
-	pickedShape = 1;
+	//pickedShape = 2;
+	//shapeTransformation(zLocalRotate,45);	
 
-	shapeTransformation(zGlobalTranslate,-10);
-	shapeTransformation(yScale,3.30f);
-	shapeTransformation(xScale,3.30f);
-	shapeTransformation(zScale,3.30f);
+	//pickedShape = 1;
 
-	pickedShape =3;
-	shapeTransformation(yScale,1.30f);
-	shapeTransformation(xScale,1.30f);
-	shapeTransformation(zScale,3.30f);
+	//shapeTransformation(zGlobalTranslate,-10);
+	//shapeTransformation(yScale,3.30f);
+	//shapeTransformation(xScale,3.30f);
+	//shapeTransformation(zScale,3.30f);
+
+	//pickedShape =3;
+	//shapeTransformation(yScale,1.30f);
+	//shapeTransformation(xScale,1.30f);
+	//shapeTransformation(zScale,3.30f);
 
 	pickedShape = -1;
 	Activate();
